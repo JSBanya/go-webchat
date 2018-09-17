@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<script src="jquery-3.3.1.min.js"></script>
+<script src="index.js"></script>
+
+<h1 id="main-header">Super Secret CS425 Chat</h1>
+<div id="chat-list">
+</div>
+
+
+<div id="chat-modal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-container">
+    <div class="modal-close">&times;</div>
+    <h2 class="modal-header">Authentication required</h2>
+    <div class="modal-content-top">
+    	<div class="modal-username-container">
+			<span class="modal-text">Username:</span>
+			<input type="text" id="modal-username" class="modal-input" maxlength="20" placeholder="Username">
+		</div>
+		<div class="modal-password-container">
+			<span class="modal-text">Password:</span>
+			<input type="password" id="modal-password" class="modal-input">
+		</div>
+    </div>
+    <div class="modal-content-bottom">
+    	<button id="modal-submit" onclick="submit()">Submit</button>
+    </div>
+  </div>
+</div> 
+
+</body>
+</html> 

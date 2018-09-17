@@ -1,0 +1,179 @@
+html, body {
+	width: 100%;
+	height: 100%;
+	background-color: #FFFFFF;
+}
+
+#main-header {
+	width: 100%;
+	text-align: center;
+}
+
+#chat-list {
+
+}
+
+.chat-item {
+	width: 75%;
+	min-height: 50px;
+	max-height: 50px;
+
+	padding: 0px;
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+
+	background-color: #FAFAFA;
+	border-style: dotted;
+    border-color: #CCCCCC;
+    border-width: 3px;
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+
+   	font-family: "Times New Roman", Times, serif;
+	font-size: 1.25em;
+}
+
+.chat-item:hover {
+    border-color: #AAAAAA;
+    cursor: pointer;
+}
+
+.chat-name {
+	font-weight: bold;
+	padding-left: 15px;
+	color: red;
+}
+
+.chat-description {
+	font-size: 0.9em;
+	margin-left: 10px;
+	padding-left: 10px;
+	color: #888888;
+	border-left: 1px solid #666666;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4); 
+}
+
+.modal-header {
+	width: 100%;
+	text-align: center;
+	font-size: 20px;
+	padding: 0px;
+	padding-bottom: 5px;
+
+	margin: 0px;
+	margin-bottom: 20px;
+
+	border-bottom: 1px solid #CCCCCC;
+}
+
+.modal-container {
+	position: relative;
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 15px;
+    border: 1px solid #888;
+    width: 50%;
+    min-height: 100px;
+    display: block;
+}
+
+.modal-content-top {
+    width: 100%;
+    text-align: center;
+    display: block;
+}
+
+.modal-username-container {
+	margin-bottom: 10px;
+}
+
+.modal-username-container {
+	margin-bottom: 10px;
+}
+
+.modal-text {
+	height: 100%;
+	font-size: 18px;
+	margin-right: 10px;
+	font-family: "Courier New", Courier, monospace;
+	font-size: 1em;
+}
+
+.modal-input {
+	background-color: #FFFFFF;
+	height: 100%;
+	width: 35%;
+
+	border-style: solid;
+	border-color: #AAAAAA;
+	border-width: 1px;
+	border-radius: 3px;
+}
+
+#modal-username {
+
+}
+
+#modal-password {
+	
+}
+
+.modal-close {
+	position: absolute;
+	right: 2px;
+	top: 0px;
+    color: #aaa;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.modal-close:hover, .modal-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+} 
+
+.modal-content-bottom {
+	margin-top: 20px;
+	width: 100%;
+	display: flex;
+  	justify-content: center;
+}
+
+#modal-submit {
+	padding: 5px 15px;
+
+	margin: auto;
+
+	background-color: #3333ff;
+	color: #FFFFFF;
+	font-size: 20px;
+    font-weight: bold;
+
+	border-style: solid;
+    border-color: #3333ff;
+    border-width: 1px;
+    border-radius: 5px;
+}
+
+#modal-submit:hover {
+	background-color: #1111ff;
+	border-color: #1111ff;
+	cursor: pointer;
+}
