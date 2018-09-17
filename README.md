@@ -29,6 +29,14 @@ in cmd/main.go with
 ```go
 log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", PORT), nil))
 ```
+and the line
+```javascript
+new WebSocket("wss://" (...)
+```
+in www/chat.js with
+```javascript
+new WebSocket("ws://" (...)
+```
 
 Once all dependencies are fetched and all configuration changes are made, the project can be built by running
 ```
