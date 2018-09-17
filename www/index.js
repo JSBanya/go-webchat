@@ -7,19 +7,40 @@ $(document).ready(function(){
     dataType: "json"
   });
 
-  $(".modal-close").click(function() {
+  $("#modal-close-auth").click(function() {
     channel = "";
-    $('#chat-modal').hide();
+    $('#chat-modal-auth').hide();
   });
 
-  $("#chat-modal").on('keyup', function (e) {
+
+  $("#modal-close-create").click(function() {
+    $('#chat-modal-create').hide();
+  });
+
+  // Authentication modal 'enter' key callbacks
+  $("#chat-modal-auth").on('keyup', function (e) {
     let code = (e.keyCode ? e.keyCode : e.which);
     if (code == 13) {
         submit();
     }
   });
 
-  $("#chat-modal").on('keydown', function (e) {
+  $("#chat-modal-auth").on('keydown', function (e) {
+    let code = (e.keyCode ? e.keyCode : e.which);
+    if (code == 13) {
+        return false;
+    }
+  });
+
+  // Creation modal 'enter' key callbacks
+  $("#chat-modal-create").on('keyup', function (e) {
+    let code = (e.keyCode ? e.keyCode : e.which);
+    if (code == 13) {
+        createRoom();
+    }
+  });
+
+  $("#chat-modal-create").on('keydown', function (e) {
     let code = (e.keyCode ? e.keyCode : e.which);
     if (code == 13) {
         return false;
@@ -29,6 +50,11 @@ $(document).ready(function(){
 
 // Display list of rooms
 function populateRooms(data) {
+  if(data.length == 0) {
+    $('#empty-warning').show();
+    return;
+  }
+
   data.sort(function(a,b) {
     if(a.name < b.name) {
       return -1;
@@ -37,7 +63,8 @@ function populateRooms(data) {
   });
   for(let i = 0; i < data.length; i++) {
     let name = data[i].name;
-    let roomHTML = `<div class="chat-item" onclick="enterRoom('`+chanIdEncode(name)+`')"><span class="chat-name">`+escapeHTML(name)+`</span><span class="chat-description">`+escapeHTML(data[i].description)+`</span></div>`;
+    let description = data[i].description;
+    let roomHTML = `<div class="chat-item" onclick="enterRoom('`+chanIdEncode(name)+`')"><span class="chat-name">`+escapeHTML(name)+`</span><span class="chat-description">`+escapeHTML(description)+`</span></div>`;
     $('#chat-list').append(roomHTML);
   }
 }
@@ -49,7 +76,7 @@ function enterRoom(name) {
     window.location.replace("/chat?channel="+encodeURI(name));
   }).fail(function() {
     channel = name;
-    $('#chat-modal').show();
+    $('#chat-modal-auth').show();
   });
 }
 
@@ -74,6 +101,42 @@ function submit() {
   });
 
   $("#modal-password").val("");
+}
+
+function showRoomCreation() {
+  $('#chat-modal-create').show();
+}
+
+function createRoom() {
+  let name = $("#modal-room-name").val().trim();
+  let description = $("#modal-room-description").val().trim();
+  let password = $("#modal-room-password").val().trim();
+  let password2 = $("#modal-room-password-confirm").val().trim();
+  if(name == "" || password == "" || password2 == "") {
+    return;
+  }
+
+  if(password != password2) {
+    alert("Passwords do not match.");
+    $("#modal-room-password").val("");
+    $("#modal-room-password-confirm").val("");
+    return;
+  }
+
+  let data = "name="+name+"&password="+password;
+  if(description != "") {
+    data += "&desc="+description.replace(/;/g, '').replace(/&/g, '');
+  }
+
+  $.ajax({
+    type: "POST",
+    url: "/create",
+    data: data
+  }).done(function() {
+    window.location.replace("/index.html");
+  }).fail(function(xhr, textStatus, error) {
+      alert(xhr.responseText);
+  });
 }
 
 function escapeHTML(unsafe_str) {

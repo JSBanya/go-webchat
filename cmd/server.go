@@ -35,7 +35,6 @@ func handleOutgoing(channel string) {
 }
 
 // Creates a new chatroom
-// TODO: Check if chatroom already exists; Allow creation of chatrooms from frontend
 func createChatroom(name string, password string, description string) {
 	c := &Chatroom{Name: name, Password: password, Description: description}
 	c.Users = make(map[string]*User)

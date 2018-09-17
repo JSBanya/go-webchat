@@ -10,29 +10,64 @@
 
 <h1 id="main-header">GoChat</h1>
 <div id="chat-list">
+  <h2 id="empty-warning">No channels have been created yet!</h2>
 </div>
 
-
-<div id="chat-modal" class="modal">
-  <!-- Modal content -->
+<!--Modal for authentication-->
+<div id="chat-modal-auth" class="modal">
   <div class="modal-container">
-    <div class="modal-close">&times;</div>
+    <div class="modal-close" id="modal-close-auth">&times;</div>
     <h2 class="modal-header">Authentication required</h2>
     <div class="modal-content-top">
-    	<div class="modal-username-container">
-			<span class="modal-text">Username:</span>
-			<input type="text" id="modal-username" class="modal-input" maxlength="20" placeholder="Username">
-		</div>
-		<div class="modal-password-container">
-			<span class="modal-text">Password:</span>
-			<input type="password" id="modal-password" class="modal-input">
-		</div>
+      <table class="modal-content-table">
+        <tr class="modal-content-row">
+          <td class="modal-content-data-left"><span class="modal-text">Username:</span></td>
+          <td class="modal-content-data-right"><input type="text" id="modal-username" class="modal-input" maxlength="20" placeholder="Username"></td>
+        </tr>
+        <tr class="modal-content-row">
+          <td class="modal-content-data-left"><span class="modal-text">Password:</span></td>
+          <td class="modal-content-data-right"><input type="password" id="modal-password" class="modal-input"></td>
+        </tr>
+      </table>
     </div>
     <div class="modal-content-bottom">
-    	<button id="modal-submit" onclick="submit()">Submit</button>
+    	<button class="modal-submit" onclick="submit()">Submit</button>
     </div>
   </div>
-</div> 
+</div>
+
+<!--Modal for room creation-->
+<div id="chat-modal-create" class="modal">
+  <div class="modal-container">
+    <div class="modal-close" id="modal-close-create">&times;</div>
+    <h2 class="modal-header">Create New Channel</h2>
+    <div class="modal-content-top">
+      <table class="modal-content-table">
+        <tr class="modal-content-row">
+          <td class="modal-content-data-left"><span class="modal-text">Channel Name:</span></td>
+          <td class="modal-content-data-right"><input type="text" id="modal-room-name" class="modal-input" maxlength="30" placeholder="Name"></td>
+        </tr>
+        <tr class="modal-content-row">
+          <td class="modal-content-data-left"><span class="modal-text">Description:</span></td>
+          <td class="modal-content-data-right"><input type="text" id="modal-room-description" class="modal-input" maxlength="100" placeholder="Description (optional)"></td>
+        </tr>
+        <tr class="modal-content-row">
+          <td class="modal-content-data-left"><span class="modal-text">Channel Password:</span></td>
+          <td class="modal-content-data-right"><input type="password" id="modal-room-password" class="modal-input" maxlength="30"></td>
+        </tr>
+        <tr class="modal-content-row">
+          <td class="modal-content-data-left"><span class="modal-text">Confirm Password:</span></td>
+          <td class="modal-content-data-right"><input type="password" id="modal-room-password-confirm" class="modal-input" maxlength="30"></td>
+        </tr>
+      </table>
+    </div>
+    <div class="modal-content-bottom">
+      <button class="modal-submit" onclick="createRoom()">Create</button>
+    </div>
+  </div>
+</div>
+
+<button id="button-add-channel" onclick="showRoomCreation()">+</button>
 
 </body>
 </html> 

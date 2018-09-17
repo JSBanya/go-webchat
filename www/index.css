@@ -13,6 +13,15 @@ html, body {
 
 }
 
+#empty-warning {
+	display: none;
+	width: 100%;
+	text-align: center;
+	font-family: "Times New Roman", Times, serif;
+	font-size: 1.5em;
+	color: #999999;
+}
+
 .chat-item {
 	width: 75%;
 	min-height: 50px;
@@ -46,6 +55,7 @@ html, body {
 	font-weight: bold;
 	padding-left: 15px;
 	color: red;
+	overflow: hidden;
 }
 
 .chat-description {
@@ -54,6 +64,7 @@ html, body {
 	padding-left: 10px;
 	color: #888888;
 	border-left: 1px solid #666666;
+	overflow: hidden;
 }
 
 .modal {
@@ -95,43 +106,47 @@ html, body {
 
 .modal-content-top {
     width: 100%;
-    text-align: center;
     display: block;
 }
 
-.modal-username-container {
-	margin-bottom: 10px;
+.modal-content-table {
+	width: 70%;
+	margin-left: 15%;
+	margin-right: 15%;
 }
 
-.modal-username-container {
-	margin-bottom: 10px;
+.modal-content-row {
+	width: 100%;
+}
+
+.modal-content-data-left {
+	width: 25%;
+	padding-bottom: 5px;
+}
+
+.modal-content-data-right {
+	width: 75%;
+	padding-bottom: 5px;
 }
 
 .modal-text {
 	height: 100%;
-	font-size: 18px;
+	width: 100%;
 	margin-right: 10px;
-	font-family: "Courier New", Courier, monospace;
 	font-size: 1em;
+	text-align: left;
+	overflow: hidden;
 }
 
 .modal-input {
 	background-color: #FFFFFF;
 	height: 100%;
-	width: 35%;
+	width: 100%;
 
 	border-style: solid;
 	border-color: #AAAAAA;
 	border-width: 1px;
 	border-radius: 3px;
-}
-
-#modal-username {
-
-}
-
-#modal-password {
-	
 }
 
 .modal-close {
@@ -156,7 +171,7 @@ html, body {
   	justify-content: center;
 }
 
-#modal-submit {
+.modal-submit {
 	padding: 5px 15px;
 
 	margin: auto;
@@ -172,8 +187,26 @@ html, body {
     border-radius: 5px;
 }
 
-#modal-submit:hover {
+.modal-submit:hover {
 	background-color: #1111ff;
 	border-color: #1111ff;
 	cursor: pointer;
+}
+
+#button-add-channel {
+	position: absolute;
+	bottom: 10px;
+	left: 10px;
+
+	background-color: transparent;
+	border-style: none;
+
+	font-weight: bold;
+	font-size: 1.0em;
+	color: #666666;
+}
+
+#button-add-channel:hover {
+	cursor: pointer;
+	color: #000000;
 }

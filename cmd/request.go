@@ -299,6 +299,58 @@ func getUsers(w http.ResponseWriter, r *http.Request) {
 	io.Copy(w, bytes.NewBuffer(content))
 }
 
+// Create a channel based on the received request
+func createChannelRequest(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
+
+	name := strings.Trim(r.FormValue("name"), " ")
+	password := strings.Trim(r.FormValue("password"), " ")
+	description := strings.Trim(r.FormValue("desc"), " ")
+
+	// Validate name
+	valid := true
+	if name == "" || len(name) > 30 {
+		valid = false
+	}
+
+	if valid {
+		for _, r := range name {
+			if (r < 'a' || r > 'z') && (r < 'A' || r > 'Z') && (r < '0' || r > '9') && r != '\'' && r != ' ' {
+				valid = false
+			}
+		}
+	}
+
+	if !valid {
+		http.Error(w, "Invalid channel name.", http.StatusBadRequest)
+		return
+	}
+
+	if chats[name] != nil {
+		http.Error(w, "A room with that name already exists.", http.StatusBadRequest)
+		return
+	}
+
+	// Validate description
+	if len(description) > 100 {
+		http.Error(w, "Invalid description.", http.StatusBadRequest)
+		return
+	}
+
+	// Validate password
+	if len(password) > 30 {
+		http.Error(w, "Invalid password.", http.StatusBadRequest)
+		return
+	}
+
+	// Create room
+	createChatroom(name, password, description)
+	log.Printf("\u001b[32mNew channel \"%s\" created by %s (password: %s)\u001b[0m", name, r.RemoteAddr, password)
+
+	w.WriteHeader(http.StatusOK)
+}
+
 // Logs a connection to the server
 // Should be called by major handler functions to maintain detailed logs.
 func logRequest(r *http.Request) {

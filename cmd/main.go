@@ -18,12 +18,10 @@ func main() {
 	http.HandleFunc("/checkauth", isAuthenticated)
 	http.HandleFunc("/chat", serveChatroom)
 	http.HandleFunc("/users", getUsers)
+	http.HandleFunc("/create", createChannelRequest)
 
 	// Create chat map
 	chats = make(map[string]*Chatroom)
-
-	// Hard-code chatrooms here (Adding from frontend not yet implemented)
-	createChatroom("Test room", "password", "Development")
 
 	// Start server
 	log.Printf("Webserver serving files from %s started on port %d.", FILE_PATH, PORT)
