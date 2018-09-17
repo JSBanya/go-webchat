@@ -87,7 +87,7 @@ html, body {
     border-radius: 10px;
 
     overflow-y: auto;
-    overflow-x: none;
+    overflow-x: hidden;
 }
 
 #bottom-container {
@@ -125,6 +125,8 @@ html, body {
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     border-right: none;
+
+    resize: none;
 }
 
 #button-submit {
@@ -174,6 +176,16 @@ html, body {
 	border-bottom: 1px solid #EEEEEE;
 }
 
+.chat-timestamp {
+	position: relative;
+	margin-right: 5px;
+	top: -1px;
+
+	font-family: "Courier New", Courier, monospace;
+	font-size: 0.6em;
+	color: #666666;
+}
+
 .chat-username {
 
 }
@@ -181,4 +193,5 @@ html, body {
 .chat-text {
 	padding-left: 5px;
 	word-wrap: normal;
+	overflow: hidden; 
 }

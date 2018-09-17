@@ -44,7 +44,7 @@ function updateHistory(event) {
     let data = JSON.parse(event.data);
     let message = parseEmotes(escapeHTML(data.message));
 
-    let chatHTML = `<span class="chat-entry"><span class="chat-username" style="color:`+data.color+`">`+escapeHTML(data.username)+`:</span><span class="chat-text">`+message+`</span></span>`;
+    let chatHTML = `<span class="chat-entry"><span class="chat-timestamp">`+timestampToString(data.timestamp)+`</span><span class="chat-username" style="color:`+data.color+`">`+escapeHTML(data.username)+`:</span><span class="chat-text">`+message+`</span></span>`;
     $('#box-history').append(chatHTML);
     $('#box-history').animate({scrollTop : document.getElementById("box-history").scrollHeight }, 0);
 }
@@ -62,6 +62,24 @@ function getChannelName() {
 
 function escapeHTML(unsafe_str) {
     return unsafe_str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\"/g, '&quot;').replace(/\'/g, '&#39;');
+}
+
+function timestampToString(time) {
+  let date = new Date(time);
+ ///console.log(date.getTimezoneOffset());
+  //date.setTime(time + date.getTimezoneOffset()*60*1000);
+
+  let hour = date.getHours();
+  let min = date.getMinutes();
+  let sec = date.getSeconds();
+
+  let str = "";
+  str += (hour < 10 ? "0"+hour : hour);
+  str += ":";
+  str += (min < 10 ? "0"+min : min);
+  str += ":";
+  str += (sec < 10 ? "0"+sec : sec);
+  return str;
 }
 
 // Periodically updates the list of online/offline users
