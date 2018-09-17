@@ -66,8 +66,6 @@ function escapeHTML(unsafe_str) {
 
 function timestampToString(time) {
   let date = new Date(time);
- ///console.log(date.getTimezoneOffset());
-  //date.setTime(time + date.getTimezoneOffset()*60*1000);
 
   let hour = date.getHours();
   let min = date.getMinutes();
