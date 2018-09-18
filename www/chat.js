@@ -1,6 +1,16 @@
 var socket = new WebSocket("wss://"+location.hostname+(location.port ? ':'+location.port: '')+"/connect?channel="+getChannelName());
+var title = getChannelName();
+var playSound = true;
+var alertSound = new Audio('/audio/alert.mp3');
+var pendingMessages = 0;
 
 $(document).ready(function(){
+  document.title = title;
+  window.onfocus = function(){
+      pendingMessages = 0;
+      document.title = title;
+  };
+
   $("#button-submit").click(sendMessage);
 
   // Callback for enter key to send message
@@ -34,7 +44,7 @@ function sendMessage() {
     return;
   }
 
-  let data = {timestamp: Date.now(), message: msg}
+  let data = {message: msg}
   socket.send(JSON.stringify(data));
   $("#box-chat").val('');
 }
@@ -47,6 +57,17 @@ function updateHistory(event) {
     let chatHTML = `<span class="chat-entry"><span class="chat-timestamp">`+timestampToString(data.timestamp)+`</span><span class="chat-username" style="color:`+data.color+`">`+escapeHTML(data.username)+`:</span><span class="chat-text">`+message+`</span></span>`;
     $('#box-history').append(chatHTML);
     $('#box-history').animate({scrollTop : document.getElementById("box-history").scrollHeight }, 0);
+
+    // Handle notifications (title change and sound) when the page is not visible (e.g. tabbed out)
+    if(document.hidden) {
+      pendingMessages++;
+      document.title = "• "+title + " ("+pendingMessages+" new messages)";
+      if(playSound) {
+        alertSound.play();
+        playSound = false;
+        setTimeout(function(){ playSound = true; }, 10000);
+      }
+    }
 }
 
 // Returns the current channel name

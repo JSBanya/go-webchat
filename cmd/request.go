@@ -30,7 +30,7 @@ func serveContent(w http.ResponseWriter, r *http.Request) {
 	logRequest(r)
 
 	path := filepath.Clean(r.URL.Path)
-	if strings.Trim(path, "/") == "images" {
+	if strings.Trim(path, "/") == "images" || strings.Trim(path, "/") == "audio" {
 		http.Error(w, "403 Forbidden", http.StatusForbidden)
 		return
 	}
@@ -113,6 +113,7 @@ func wsConnect(w http.ResponseWriter, r *http.Request) {
 
 			data.Username = chats[channel].Users[sid].Name
 			data.Color = chats[channel].Users[sid].Color
+			data.Timestamp = (time.Now().UnixNano() / int64(time.Millisecond))
 
 			chats[channel].RecentHistory = append(chats[channel].RecentHistory, &data)
 			chats[channel].HistoryUpdated = true
@@ -346,7 +347,7 @@ func createChannelRequest(w http.ResponseWriter, r *http.Request) {
 
 	// Create room
 	createChatroom(name, password, description)
-	log.Printf("\u001b[32mNew channel \"%s\" created by %s (password: %s)\u001b[0m", name, r.RemoteAddr, password)
+	log.Printf("\u001b[32mNew channel \"%s\" created by %s\u001b[0m", name, r.RemoteAddr)
 
 	w.WriteHeader(http.StatusOK)
 }

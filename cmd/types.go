@@ -28,7 +28,7 @@ type User struct {
 }
 
 type MessageData struct {
-	Timestamp uint64 `json:"timestamp"`
+	Timestamp int64  `json:"timestamp"`
 	Username  string `json:"username"`
 	Message   string `json:"message"`
 	Color     string `json:"color"`
