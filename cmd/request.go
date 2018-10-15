@@ -25,7 +25,6 @@ var upgrader = websocket.Upgrader{
 
 // Serve all directories not otherwise specifically handled
 func serveContent(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "*")
 	logRequest(r)
 
@@ -40,7 +39,6 @@ func serveContent(w http.ResponseWriter, r *http.Request) {
 
 // Serve main chat directory
 func serveChatroom(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
 	logRequest(r)
 
@@ -61,7 +59,6 @@ func serveChatroom(w http.ResponseWriter, r *http.Request) {
 
 // Handle websocket connection for chatrooms
 func wsConnect(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "*")
 
 	channel := chanIdEncode(strings.Trim(r.URL.Query().Get("channel"), " "))
@@ -128,7 +125,6 @@ func wsConnect(w http.ResponseWriter, r *http.Request) {
 // Only one password is valid for a given chatroom
 // If the user is authenticated, this function will complete by setting the user's session ID as a cookie
 func auth(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
 
 	defer r.Body.Close()
@@ -212,7 +208,6 @@ func auth(w http.ResponseWriter, r *http.Request) {
 
 // Check if a user is already authenticated by checking their cookie session ID
 func isAuthenticated(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "*")
 
 	channel := chanIdEncode(strings.Trim(r.URL.Query().Get("channel"), " "))
@@ -237,7 +232,6 @@ func isAuthenticated(w http.ResponseWriter, r *http.Request) {
 
 // Serves a list of available chatrooms
 func getRooms(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
 	logRequest(r)
 
@@ -262,7 +256,6 @@ func getRooms(w http.ResponseWriter, r *http.Request) {
 // Serves a list of users (online or offline) for the given chatroom
 // Ensures that the connecting client is authenticated before serving information
 func getUsers(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
 
 	channel := chanIdEncode(strings.Trim(r.URL.Query().Get("channel"), " "))
@@ -302,7 +295,6 @@ func getUsers(w http.ResponseWriter, r *http.Request) {
 
 // Create a channel based on the received request
 func createChannelRequest(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
 
 	name := strings.Trim(r.FormValue("name"), " ")
