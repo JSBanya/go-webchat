@@ -19,9 +19,7 @@ const (
 	MAX_PASSWORD_ATTEMPTS = 10
 )
 
-var upgrader = websocket.Upgrader{
-	CheckOrigin: func(r *http.Request) bool { return true },
-}
+var upgrader = websocket.Upgrader{}
 
 // Serve all directories not otherwise specifically handled
 func serveContent(w http.ResponseWriter, r *http.Request) {
@@ -34,7 +32,7 @@ func serveContent(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.ServeFile(w, r, FILE_PATH+path)
+	http.ServeFile(w, r, filePath+path)
 }
 
 // Serve main chat directory
@@ -54,7 +52,7 @@ func serveChatroom(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	http.ServeFile(w, r, FILE_PATH+"chat.html")
+	http.ServeFile(w, r, filePath+"chat.html")
 }
 
 // Handle websocket connection for chatrooms
@@ -95,27 +93,19 @@ func wsConnect(w http.ResponseWriter, r *http.Request) {
 	// Handle incoming messages
 	for {
 		var data MessageData
-
-		err := c.ReadJSON(&data)
+		err := c.ReadJSON(&data) // Blocks until a message is received
 		if err != nil {
 			log.Println("Unable to read client data:", err)
 			c.Close()
-			chats[channel].Users[sid].Socket = nil
 			chats[channel].Users[sid].Online = false
 			break
 		}
 
 		if data.Message != "" && len(data.Message) <= 500 {
-			chats[channel].HistoryMutex.Lock()
-
 			data.Username = chats[channel].Users[sid].Name
 			data.Color = chats[channel].Users[sid].Color
 			data.Timestamp = (time.Now().UnixNano() / int64(time.Millisecond))
-
-			chats[channel].RecentHistory = append(chats[channel].RecentHistory, &data)
-			chats[channel].HistoryUpdated = true
-
-			chats[channel].HistoryMutex.Unlock()
+			broadcast(channel, &data)
 		}
 	}
 }
@@ -342,6 +332,15 @@ func createChannelRequest(w http.ResponseWriter, r *http.Request) {
 	log.Printf("\u001b[32mNew channel \"%s\" created by %s\u001b[0m", name, r.RemoteAddr)
 
 	w.WriteHeader(http.StatusOK)
+}
+
+// Redirect HTTP to HTTPS
+func redirect(w http.ResponseWriter, req *http.Request) {
+	target := "https://" + req.Host + req.URL.Path
+	if len(req.URL.RawQuery) > 0 {
+		target += "?" + req.URL.RawQuery
+	}
+	http.Redirect(w, req, target, http.StatusTemporaryRedirect)
 }
 
 // Logs a connection to the server

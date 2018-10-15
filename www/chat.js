@@ -1,10 +1,16 @@
-var socket = new WebSocket("wss://"+location.hostname+(location.port ? ':'+location.port: '')+"/connect?channel="+getChannelName());
+var socket;
 var title = getChannelName();
 var playSound = true;
 var alertSound = new Audio('/audio/alert.mp3');
 var pendingMessages = 0;
 
-$(document).ready(function(){
+$(document).ready(function() {
+  let wsProtocol = "wss"
+  if (location.protocol != 'https:') {
+    wsProtocol = "ws"
+  }
+  socket = new WebSocket(wsProtocol+"://"+location.hostname+(location.port ? ':'+location.port: '')+"/connect?channel="+getChannelName());
+
   document.title = title;
   window.onfocus = function(){
       pendingMessages = 0;

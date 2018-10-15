@@ -12,10 +12,8 @@ type Chatroom struct {
 
 	Users map[string]*User `json:"-"`
 
-	History        []*MessageData `json:"-"`
-	RecentHistory  []*MessageData `json:"-"`
-	HistoryMutex   sync.Mutex     `json:"-"`
-	HistoryUpdated bool           `json:"-"`
+	History      []*MessageData `json:"-"`
+	HistoryMutex sync.Mutex     `json:"-"`
 
 	FailedPassAttempts map[string]int `json:"-"`
 }
